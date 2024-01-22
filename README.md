@@ -17,8 +17,8 @@ This is a repository to specifically for reproducing an issue in drachtio-server
 
 ## Execution
 
-docker-compose -f docker-compose-local.yaml up --build
-docker-compose -f docker-compose-star.yaml up --build
+* docker-compose -f docker-compose-local.yaml up --build
+* docker-compose -f docker-compose-star.yaml up --build
 
 
 ## logs
