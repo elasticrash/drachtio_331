@@ -1,0 +1,62 @@
+version: '3.8'
+
+networks:
+  dranet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.29.0.0/16
+services:
+  proxy:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp" --external-ip "172.29.0.10" --loglevel debug --sofia-loglevel 9
+    ports:
+      - 9022:9022/tcp
+      - 9023:9023/tcp
+      - 6060:5060/udp
+    networks:
+      dranet:
+        ipv4_address: 172.29.0.10
+
+  destination:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug --sofia-loglevel 9
+    ports:
+      - 9025:9022/tcp
+      - 9026:9023/tcp
+      - 7060:5060/udp
+    networks:
+      dranet:
+        ipv4_address: 172.29.0.11
+
+  proxy-srf:
+    build: 
+      dockerfile: ./js-app.Dockerfile
+      context: .
+    command: node ./src/proxy.js
+    networks:
+      dranet:
+        ipv4_address: 172.29.0.12
+
+  destination-srf: 
+    build: 
+      dockerfile: ./js-app.Dockerfile
+      context: .
+    command: node ./src/destination.js
+    networks:
+      dranet:
+        ipv4_address: 172.29.0.13
+  
+  tiggy: 
+    build:
+      dockerfile: ./ua.Dockerfile
+      context: .
+    command: ./target/debug/ttg 10
+    networks: 
+      dranet:
+        ipv4_address: 172.29.0.14
+
+
+
+
+

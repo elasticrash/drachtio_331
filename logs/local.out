@@ -1,0 +1,174 @@
+#0 building with "default" instance using docker driver
+
+#1 [destination-srf internal] load .dockerignore
+#1 transferring context:
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [proxy-srf internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [destination-srf internal] load build definition from js-app.Dockerfile
+#3 transferring dockerfile: 127B done
+#3 DONE 0.1s
+
+#4 [proxy-srf internal] load build definition from js-app.Dockerfile
+#4 transferring dockerfile: 127B done
+#4 DONE 0.0s
+
+#5 [tiggy internal] load build definition from ua.Dockerfile
+#5 transferring dockerfile: 135B done
+#5 DONE 0.0s
+
+#6 [tiggy internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [proxy-srf internal] load metadata for docker.io/library/node:21
+#7 DONE 1.5s
+
+#8 [proxy-srf internal] load build context
+#8 transferring context: 2.20kB done
+#8 DONE 0.0s
+
+#9 [proxy-srf 1/4] FROM docker.io/library/node:21@sha256:0ded28778059262bd3c066b609186e5b6c89550a9362dce4309ad67c95af0d77
+#9 DONE 0.0s
+
+#10 [proxy-srf 2/4] COPY ./package.json ./package.json
+#10 CACHED
+
+#11 [proxy-srf 3/4] COPY ./src ./src
+#11 CACHED
+
+#12 [proxy-srf 4/4] RUN npm install
+#12 CACHED
+
+#13 [destination-srf internal] load build context
+#13 transferring context: 127B done
+#13 DONE 0.0s
+
+#14 [proxy-srf] exporting to image
+#14 exporting layers done
+#14 writing image sha256:78cf666388125e380568e923e389ac331d42994863beb8593754b57d8ec0c086 0.0s done
+#14 naming to docker.io/library/drsip-proxy-srf 0.0s done
+#14 DONE 0.0s
+
+#15 [destination-srf] exporting to image
+#15 exporting layers done
+#15 writing image sha256:e6b0ed64053345915f481059d6acf35a13b2039879b2324cba4e2ea1524adfb6 done
+#15 naming to docker.io/library/drsip-destination-srf 0.0s done
+#15 DONE 0.0s
+
+#16 [tiggy internal] load metadata for docker.io/library/rust:1-bookworm
+#16 DONE 2.1s
+
+#17 [tiggy 1/4] FROM docker.io/library/rust:1-bookworm@sha256:ac8c4cb82e317512260fbcf54e80039d9083605e3b8ea3b9fd4c39e1472c6215
+#17 DONE 0.0s
+
+#18 [tiggy internal] load build context
+#18 transferring context: 9.90kB done
+#18 DONE 0.0s
+
+#19 [tiggy 3/4] COPY ./ttg/Cargo.toml ./Cargo.toml
+#19 CACHED
+
+#20 [tiggy 2/4] COPY ./ttg/src ./src
+#20 CACHED
+
+#21 [tiggy 4/4] RUN cargo build
+#21 CACHED
+
+#22 [tiggy] exporting to image
+#22 exporting layers done
+#22 writing image sha256:fcef01b5947125480a48ee77d6c6c806bbbf7c3057704ed3c5fda803f92756fb done
+#22 naming to docker.io/library/drsip-tiggy done
+#22 DONE 0.0s
+Attaching to drsip-destination-1, drsip-destination-srf-1, drsip-proxy-1, drsip-proxy-srf-1, drsip-tiggy-1
+drsip-destination-srf-1  | connected to a drachtio server listening on: udp/127.0.0.1:5060,udp/172.29.0.11:5060
+drsip-proxy-srf-1        | connected to a drachtio server listening on: udp/172.29.0.10:5060
+drsip-tiggy-1            | .....................................................................................................INVITE sip:+443332222@127.0.0.1:5060 SIP/2.0
+drsip-tiggy-1            | Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK1221046331705920393811
+drsip-tiggy-1            | From: test <sip:+443332222@127.0.0.1:5060>;tag=299f82d7-f0e9-478c-b0a4-87a38b000d66
+drsip-tiggy-1            | To: +443332222 <sip:+111111111@127.0.0.1:5060>
+drsip-tiggy-1            | Call-ID: 2a03f5c6-db1b-4203-b290-84500900d382
+drsip-tiggy-1            | Contact: +443332222 <sip:+443332222@127.0.0.1:5061>
+drsip-tiggy-1            | Max-Forwards: 70
+drsip-tiggy-1            | CSeq: 1 INVITE
+drsip-tiggy-1            | Allow: ACK,BYE,CANCEL,INVITE
+drsip-tiggy-1            | Content-Type: application/sdp
+drsip-tiggy-1            | Content-Length: 224
+drsip-tiggy-1            | 
+drsip-tiggy-1            | v=0
+drsip-tiggy-1            | o=tggVCE 226678890 391916715 IN IP4 127.0.0.1
+drsip-tiggy-1            | s=tggVCE Audio Call
+drsip-tiggy-1            | c=IN IP4 127.0.0.1
+drsip-tiggy-1            | t=0 0
+drsip-tiggy-1            | m=audio 49152 RTP/AVP 0 8 96
+drsip-tiggy-1            | a=rtpmap:0 PCMU/8000
+drsip-tiggy-1            | a=rtpmap:8 PCMA/8000
+drsip-tiggy-1            | a=rtpmap:96 telephone-event/8000
+drsip-tiggy-1            | a=fmtp:96 0-15
+drsip-tiggy-1            | 
+drsip-proxy-srf-1        | received INVITE
+drsip-proxy-srf-1        | proxying request
+drsip-destination-srf-1  | received INVITE
+drsip-destination-srf-1  | +443332222 <sip:+111111111@127.0.0.1:5060>
+drsip-destination-srf-1  | INVITE sip:+443332222@127.0.0.1:5060 SIP/2.0
+drsip-destination-srf-1  | Via: SIP/2.0/UDP 172.29.0.10;rport=5060;branch=z9hG4bK839884ee-90dc-46f1-8df1-800a905a57ee
+drsip-destination-srf-1  | Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK1221046331705920393811;received=172.29.0.14;rport=5061
+drsip-destination-srf-1  | Record-Route: <sip:172.29.0.10:5060;lr>
+drsip-destination-srf-1  | Max-Forwards: 69
+drsip-destination-srf-1  | From: test <sip:+443332222@127.0.0.1:5060>;tag=299f82d7-f0e9-478c-b0a4-87a38b000d66
+drsip-destination-srf-1  | To: +443332222 <sip:+111111111@127.0.0.1:5060>
+drsip-destination-srf-1  | Call-ID: 2a03f5c6-db1b-4203-b290-84500900d382
+drsip-destination-srf-1  | CSeq: 1 INVITE
+drsip-destination-srf-1  | Contact: +443332222 <sip:+443332222@127.0.0.1:5061>
+drsip-destination-srf-1  | Allow: ACK, BYE, CANCEL, INVITE
+drsip-destination-srf-1  | Content-Type: application/sdp
+drsip-destination-srf-1  | Content-Length: 224
+drsip-destination-srf-1  | X-Stop: 100
+drsip-destination-srf-1  | 
+drsip-destination-srf-1  | v=0
+drsip-destination-srf-1  | o=tggVCE 226678890 391916715 IN IP4 127.0.0.1
+drsip-destination-srf-1  | s=tggVCE Audio Call
+drsip-destination-srf-1  | c=IN IP4 127.0.0.1
+drsip-destination-srf-1  | t=0 0
+drsip-destination-srf-1  | m=audio 49152 RTP/AVP 0 8 96
+drsip-destination-srf-1  | a=rtpmap:0 PCMU/8000
+drsip-destination-srf-1  | a=rtpmap:8 PCMA/8000
+drsip-destination-srf-1  | a=rtpmap:96 telephone-event/8000
+drsip-destination-srf-1  | a=fmtp:96 0-15
+drsip-destination-srf-1  | 
+drsip-destination-srf-1  | received X-Stop header, sending busy response
+drsip-proxy-srf-1        | 486
+drsip-tiggy-1            | .SIP/2.0 100 Trying
+drsip-tiggy-1            | Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK1221046331705920393811;received=172.29.0.14;rport=5061
+drsip-tiggy-1            | From: test <sip:+443332222@127.0.0.1:5060>;tag=299f82d7-f0e9-478c-b0a4-87a38b000d66
+drsip-tiggy-1            | To: +443332222 <sip:+111111111@127.0.0.1:5060>
+drsip-tiggy-1            | Call-ID: 2a03f5c6-db1b-4203-b290-84500900d382
+drsip-tiggy-1            | CSeq: 1 INVITE
+drsip-tiggy-1            | Content-Length: 0
+drsip-tiggy-1            | 
+drsip-tiggy-1            | 
+drsip-tiggy-1            | <> 100 Trying
+drsip-tiggy-1            | .SIP/2.0 486 So sorry, busy right now
+drsip-tiggy-1            | Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK1221046331705920393811;received=172.29.0.14;rport=5061
+drsip-tiggy-1            | From: test <sip:+443332222@127.0.0.1:5060>;tag=299f82d7-f0e9-478c-b0a4-87a38b000d66
+drsip-tiggy-1            | To: +443332222 <sip:+111111111@127.0.0.1:5060>;tag=UQ67QypS6gpaH
+drsip-tiggy-1            | Call-ID: 2a03f5c6-db1b-4203-b290-84500900d382
+drsip-tiggy-1            | CSeq: 1 INVITE
+drsip-tiggy-1            | Content-Length: 0
+drsip-tiggy-1            | X-Custom-Header: because why not?
+drsip-tiggy-1            | 
+drsip-tiggy-1            | 
+drsip-tiggy-1            | ACK sip:+111111111@127.0.0.1:5060 SIP/2.0
+drsip-tiggy-1            | Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK1221046331705920393811;rport
+drsip-tiggy-1            | From: +443332222 <sip:+443332222@127.0.0.1:5060>;tag=299f82d7-f0e9-478c-b0a4-87a38b000d66
+drsip-tiggy-1            | To: <sip:+111111111@127.0.0.1:5060>;tag=UQ67QypS6gpaH
+drsip-tiggy-1            | Call-ID: 2a03f5c6-db1b-4203-b290-84500900d382
+drsip-tiggy-1            | CSeq: 1 ACK
+drsip-tiggy-1            | Max-Forwards: 70
+drsip-tiggy-1            | Content-Length: 0
+drsip-tiggy-1            | 
+drsip-tiggy-1            | 
