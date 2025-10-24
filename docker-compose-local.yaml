@@ -46,17 +46,3 @@ services:
     networks:
       dranet:
         ipv4_address: 172.29.0.13
-  
-  tiggy: 
-    build:
-      dockerfile: ./ua.Dockerfile
-      context: .
-    command: ./target/debug/ttg 10
-    networks: 
-      dranet:
-        ipv4_address: 172.29.0.14
-
-
-
-
-

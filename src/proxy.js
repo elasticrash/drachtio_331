@@ -17,10 +17,22 @@ srf.on('error', (err) => {
 	console.log(`Error: ${err}`);
 });
 
-srf.invite(async (req, res) => {
-	console.log(`received INVITE`);
+srf.cancel((req, res) => {
+	console.log(`received CANCEL`);
+	console.log(`++++++++++++++++++`);
+	res.send(200, {
+		headers: {
+			'X-Custom-Header': 'yo dude?'
+		}
+	});
+});
 
+srf.invite(async (req, res) => {
+	console.log(`received INVITE from ${req.source_address}`);
 	console.log('proxying request');
+	const originAddress = req.source_address;
+	const originPort = req.source_port;
+
 	const proxyOptions = {
 		headers: {
 			'X-Stop': 100,
@@ -32,6 +44,21 @@ srf.invite(async (req, res) => {
 		finalTimeout: '3s'
 	};
 
+	console.log(JSON.stringify(req));
+
+	srf.request(`sip:${originAddress}:${originPort}`, {
+		method: 'OPTIONS',
+		headers: {
+			'User-Agent': 'drachtio-ducks'
+		}
+	}, (err, req) => {
+		req.on('response', (res) => {
+			console.log(`received ${res.statusCode} response`);
+		});
+	});
+
+
+
 	let result = await srf.proxyRequest(
 		req,
 		['sip:+happy_feet@172.29.0.11;transport=UDP'],
@@ -42,4 +69,9 @@ srf.invite(async (req, res) => {
 
 srf.register((req, res) => {
 	console.log(`received REGISTER`);
+	res.send(200, {
+		headers: {
+			'X-Custom-Header': 'because why not?'
+		}
+	});
 });

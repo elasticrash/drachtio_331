@@ -17,6 +17,10 @@ srf.on('error', (err) => {
 	console.log(`Error: ${err}`);
 });
 
+srf.cancel((req, res)=> {
+	console.log(`received CANCEL`);
+});
+
 srf.invite((req, res) => {
 	console.log(`received INVITE`);
 
@@ -25,7 +29,7 @@ srf.invite((req, res) => {
 
 	if (req.msg.headers['X-Stop']) {
 		console.log(`received X-Stop header, sending busy response`);
-		res.send(486, 'So sorry, busy right now', {
+		res.send(183, 'So sorry, busy right now', {
 			headers: {
 				'X-Custom-Header': 'because why not?'
 			}
@@ -38,4 +42,9 @@ srf.invite((req, res) => {
 
 srf.register((req, res) => {
 	console.log(`received REGISTER`);
+	res.send(200, {
+		headers: {
+			'X-Custom-Header': 'because why not?'
+		}
+	});
 });
